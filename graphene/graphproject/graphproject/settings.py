@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 GRAPHENE = {
-    'SCHEMA': 'django_root.schema.schema'
+    'SCHEMA': 'graphproject.schema.schema'
 }
 
 
