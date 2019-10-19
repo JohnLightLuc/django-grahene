@@ -166,5 +166,32 @@ class IngredientNode(DjangoObjectType):
     all_ingredients = DjangoFilterConnectionField(IngredientNode)
         
      Testing 
-     
+    
+     1- query {
+          allIngredients {
+            edges {
+              node {
+                id,
+                name
+              }
+            }
+          }
+        }
+      
+     2- query {
+  allCategories {
+    edges {
+      node {
+        name,
+        ingredients {
+          edges {
+            node {
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
         
