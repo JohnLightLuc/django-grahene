@@ -1,6 +1,6 @@
 # django-grahene
 
-#METHODE 1
+# METHODE 1
 
 #Installation
 
