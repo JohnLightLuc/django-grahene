@@ -195,3 +195,6 @@ class IngredientNode(DjangoObjectType):
     }
   }
 }
+
+
+Lien 2 : https://stackabuse.com/building-a-graphql-api-with-django/
