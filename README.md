@@ -51,26 +51,26 @@ PROJET
 APPLICATION 
 
 1 - Models
-
-  from django.db import models
-
-
-  class Category(models.Model):
-      name = models.CharField(max_length=100)
-
-      def __str__(self):
-          return self.name
+    ```
+          from django.db import models
 
 
-  class Ingredient(models.Model):
-      name = models.CharField(max_length=100)
-      notes = models.TextField()
-      category = models.ForeignKey(
-          Category, related_name='ingredients', on_delete=models.CASCADE)
+          class Category(models.Model):
+              name = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.name
-        
+              def __str__(self):
+                  return self.name
+
+
+          class Ingredient(models.Model):
+              name = models.CharField(max_length=100)
+              notes = models.TextField()
+              category = models.ForeignKey(
+                  Category, related_name='ingredients', on_delete=models.CASCADE)
+
+            def __str__(self):
+                return self.name
+      ```
   2- schema.py
   
     import graphene
@@ -129,72 +129,72 @@ APPLICATION
 
 #APPLICATION/schema.py
 
-import graphene
-from graphene import relay, ObjectType
-from graphene_django import DjangoObjectType
-from graphene_django.filter import DjangoFilterConnectionField
+      import graphene
+      from graphene import relay, ObjectType
+      from graphene_django import DjangoObjectType
+      from graphene_django.filter import DjangoFilterConnectionField
 
-from ingredients.models import Category, Ingredient
-
-
- Graphene will automatically map the Category model's fields onto the CategoryNode.
- This is configured in the CategoryNode's Meta class (as you can see below)
-class CategoryNode(DjangoObjectType):
-    class Meta:
-        model = Category
-        filter_fields = ['name', 'ingredients']
-        interfaces = (relay.Node, )
+      from ingredients.models import Category, Ingredient
 
 
-class IngredientNode(DjangoObjectType):
-    class Meta:
-        model = Ingredient
-        # Allow for some more advanced filtering here
-        filter_fields = {
-            'name': ['exact', 'icontains', 'istartswith'],
-            'notes': ['exact', 'icontains'],
-            'category': ['exact'],
-            'category__name': ['exact'],
-        }
-        interfaces = (relay.Node, )
+       Graphene will automatically map the Category model's fields onto the CategoryNode.
+       This is configured in the CategoryNode's Meta class (as you can see below)
+      class CategoryNode(DjangoObjectType):
+          class Meta:
+              model = Category
+              filter_fields = ['name', 'ingredients']
+              interfaces = (relay.Node, )
 
 
-  class Query(graphene.ObjectType):
-    category = relay.Node.Field(CategoryNode)
-    all_categories = DjangoFilterConnectionField(CategoryNode)
+      class IngredientNode(DjangoObjectType):
+          class Meta:
+              model = Ingredient
+              # Allow for some more advanced filtering here
+              filter_fields = {
+                  'name': ['exact', 'icontains', 'istartswith'],
+                  'notes': ['exact', 'icontains'],
+                  'category': ['exact'],
+                  'category__name': ['exact'],
+              }
+              interfaces = (relay.Node, )
 
-    ingredient = relay.Node.Field(IngredientNode)
-    all_ingredients = DjangoFilterConnectionField(IngredientNode)
-        
+
+        class Query(graphene.ObjectType):
+          category = relay.Node.Field(CategoryNode)
+          all_categories = DjangoFilterConnectionField(CategoryNode)
+
+          ingredient = relay.Node.Field(IngredientNode)
+          all_ingredients = DjangoFilterConnectionField(IngredientNode)
+
      Testing 
     
-     1- query {
-          allIngredients {
-            edges {
-              node {
-                id,
-                name
+               1- query {
+                    allIngredients {
+                      edges {
+                        node {
+                          id,
+                          name
+                        }
+                      }
+                    }
+                  }
+
+               2- query {
+            allCategories {
+              edges {
+                node {
+                  name,
+                  ingredients {
+                    edges {
+                      node {
+                        name
+                      }
+                    }
+                  }
+                }
               }
             }
           }
-        }
-      
-     2- query {
-  allCategories {
-    edges {
-      node {
-        name,
-        ingredients {
-          edges {
-            node {
-              name
-            }
-          }
-        }
-      }
-    }
-  }
-}
 
 
 Lien 2 : https://stackabuse.com/building-a-graphql-api-with-django/
