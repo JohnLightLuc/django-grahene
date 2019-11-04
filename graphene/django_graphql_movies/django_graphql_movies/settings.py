@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_admin_generator',
     'graphene_django',
     'graphene',
+
     
 ]
 
@@ -60,7 +61,7 @@ ROOT_URLCONF = 'django_graphql_movies.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
