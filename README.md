@@ -1,6 +1,5 @@
 # django-grahene
 
-# METHODE 1
 
 #Installation
 
@@ -8,6 +7,7 @@ pip install graphene-django
 
 
 PROJET
+
   1- Settings.py
 
     INSTALLED_APPS = [
@@ -51,7 +51,7 @@ PROJET
 APPLICATION 
 
 1 - Models
-    ```
+    
           from django.db import models
 
 
@@ -70,62 +70,10 @@ APPLICATION
 
             def __str__(self):
                 return self.name
-      ```
-  2- schema.py
-  
-    import graphene
+                
+# Methode 1 
 
-    from graphene_django.types import DjangoObjectType
-
-    from cookbook.ingredients.models import Category, Ingredient
-
-
-    class CategoryType(DjangoObjectType):
-        class Meta:
-            model = Category
-
-
-    class IngredientType(DjangoObjectType):
-        class Meta:
-            model = Ingredient
-
-
-    class Query(object):
-        all_categories = graphene.List(CategoryType)
-        all_ingredients = graphene.List(IngredientType)
-
-        def resolve_all_categories(self, info, **kwargs):
-            return Category.objects.all()
-
-        def resolve_all_ingredients(self, info, **kwargs):
-            # We can easily optimize query count in the resolve method
-            return Ingredient.objects.select_related('category').all()
-            
-            
-       #Exemple Test
-       
-       1- query {
-          allIngredients {
-            id
-            name
-           }
-         }
-         
-         2- query {
-                allIngredients {
-                  id
-                  name
-                  category {
-                      id
-                      name
-                    }
-                }
-              }
-
-       
-#Methode 2 
-
-#pip install django-filter
+pip install django-filter
 
 #APPLICATION/schema.py
 
@@ -195,6 +143,62 @@ APPLICATION
               }
             }
           }
+
+     
+  ## METHODE 2
+  
+  2- schema.py
+  
+    import graphene
+
+    from graphene_django.types import DjangoObjectType
+
+    from cookbook.ingredients.models import Category, Ingredient
+
+
+    class CategoryType(DjangoObjectType):
+        class Meta:
+            model = Category
+
+
+    class IngredientType(DjangoObjectType):
+        class Meta:
+            model = Ingredient
+
+
+    class Query(object):
+        all_categories = graphene.List(CategoryType)
+        all_ingredients = graphene.List(IngredientType)
+
+        def resolve_all_categories(self, info, **kwargs):
+            return Category.objects.all()
+
+        def resolve_all_ingredients(self, info, **kwargs):
+            # We can easily optimize query count in the resolve method
+            return Ingredient.objects.select_related('category').all()
+            
+            
+       #Exemple Test
+       
+       1- query {
+          allIngredients {
+            id
+            name
+           }
+         }
+         
+         2- query {
+                allIngredients {
+                  id
+                  name
+                  category {
+                      id
+                      name
+                    }
+                }
+              }
+
+       
 
 
 Lien 2 : https://stackabuse.com/building-a-graphql-api-with-django/
