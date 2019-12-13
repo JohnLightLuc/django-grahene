@@ -46,6 +46,11 @@ PROJET
         pass
 
     schema = graphene.Schema(query=Query)
+    
+    class Mutation(mon_application.schema.Mutation, graphene.ObjectType):
+    pass
+
+    schema = graphene.Schema(query=Query,mutati on=Mutation)
 
 
 APPLICATION 
