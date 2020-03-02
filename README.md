@@ -207,3 +207,14 @@ pip install django-filter
 
 
 Lien 2 : https://stackabuse.com/building-a-graphql-api-with-django/
+
+
+## avoid crsftoken error
+
+    from django.views.decorators.csrf import csrf_exempt
+    
+    urlpatterns = [
+    # ...
+    path('...', csrf_exempt(views.myfonct) ),
+   
+    ]
