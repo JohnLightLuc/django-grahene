@@ -119,7 +119,7 @@ pip install django-filter
           ingredient = relay.Node.Field(IngredientNode)
           all_ingredients = DjangoFilterConnectionField(IngredientNode)
 
-     Testing 
+  Test of query
     
                1- query {
                     allIngredients {
