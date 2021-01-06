@@ -33,7 +33,7 @@ PROJET
         url(r'^graphql$', GraphQLView.as_view(graphiql=True)),
     ]
     
-    3 - schemma.py
+  3 - schemma.py
     
     import graphene
 
