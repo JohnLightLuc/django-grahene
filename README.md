@@ -3,7 +3,7 @@
 
 #Installation
 
-pip install graphene-django
+    pip install graphene-django
 
 
 PROJET
