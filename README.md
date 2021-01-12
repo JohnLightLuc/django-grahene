@@ -4,6 +4,12 @@
 #Installation
 
     pip install graphene-django
+    
+# Umpload Image 
+
+    pip install graphene-file-upload
+    
+    https://github.com/lmcgartland/graphene-file-upload
 
 
 PROJET
